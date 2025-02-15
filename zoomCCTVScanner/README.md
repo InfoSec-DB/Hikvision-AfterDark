@@ -1,6 +1,6 @@
 ﻿# ZoomCCTVScanner
 
-[zoomCCTVScanner](https://github.com/InfoSec-DB/Hikvision-AfterDark/blob/main/zoomCCTVScanner/scanner.png?raw=true)
+![zoomCCTVScanner](https://github.com/InfoSec-DB/Hikvision-AfterDark/blob/main/zoomCCTVScanner/scanner.png?raw=true)
 
 > **A Python-based CCTV reconnaissance and vulnerability scanner for Hikvision devices.**  
 > **Part of the Hikvision-AfterDark toolkit.**  
