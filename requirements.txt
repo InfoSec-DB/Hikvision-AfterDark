@@ -1,0 +1,4 @@
+requests
+PySide6
+pyfiglet
+matplotlib
