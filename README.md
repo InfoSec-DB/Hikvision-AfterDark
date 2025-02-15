@@ -1,5 +1,7 @@
 ﻿# Hikvision-AfterDark
 
+[Hikvision-AfterDark](https://github.com/InfoSec-DB/Hikvision-AfterDark/blob/main/Hikvision_CCTVimg.png?raw=true)
+
 > **A Python-based Hikvision exploitation, reconnaissance, and CCTV viewer toolkit.**  
 > **Created by [#AfterDark] for authorized security testing and OSINT research.**  
 
