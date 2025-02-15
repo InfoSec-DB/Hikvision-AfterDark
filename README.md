@@ -3,7 +3,7 @@
 > **A Python-based Hikvision exploitation, reconnaissance, and CCTV viewer toolkit.**  
 > **Created by [#AfterDark] for authorized security testing and OSINT research.**  
 
-**Version**: 1.0.0  
+**Version**: 1.0.8  
 
 ---
 
