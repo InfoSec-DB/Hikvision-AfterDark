@@ -1,22 +1,30 @@
-﻿# ZoomCCTVScanner
+﻿# Hikvision-ShodanScanner
 
-[zoomCCTVScanner](https://github.com/InfoSec-DB/Hikvision-AfterDark/blob/main/zoomCCTVScanner/scanner.png?raw=true)
-
-> **A Python-based CCTV reconnaissance and vulnerability scanner for Hikvision devices.**  
+> **A Python-based reconnaissance and vulnerability scanner for Hikvision cameras using Shodan.**  
 > **Part of the Hikvision-AfterDark toolkit.**  
 
 **Version**: 1.0.8 
 
 ---
 
+## 🎯 About
+
+**Hikvision-ShodanScanner** is a **powerful OSINT tool** designed to scan and analyze exposed Hikvision cameras using **Shodan**. This scanner helps security researchers identify **unauthenticated public cameras** that may be **vulnerable** to remote exploitation.  
+
+Whether for **security auditing, red team operations, or reconnaissance**, this tool automates **Hikvision camera detection** via **Shodan queries** and checks for **CVE-2021-36260** vulnerability.  
+
+🚨 **This tool is for legal and ethical security research only.** Unauthorized access to systems you do not own is strictly prohibited.  
+
+---
+
 ## 🚀 Features
 
-- **ZoomEye Search Support** – Load JSON results from **manual** ZoomEye queries.  
+- **CCTV Recon & OSINT** – Locate exposed Hikvision cameras worldwide.  
+- **Shodan API Integration** – Automates searching for public CCTV cameras.  
 - **Hikvision Vulnerability Detection** – Checks for **CVE-2021-36260** vulnerabilities.  
-- **Multithreaded Scanning** – High-speed scanning with parallel processing.  
-- **Custom JSON Input** – Scan specific IP/port lists for vulnerabilities.  
-- **Tor Support** – Optionally route traffic through **Tor** for anonymity.  
-- **Exports Results** – Saves findings to a log file for further analysis.  
+- **Multithreaded Scanning** – High-speed analysis with parallel processing.  
+- **Verbose Logging** – Debug mode available for deeper insights.  
+- **Export Results** – Saves vulnerable camera details to a log file.  
 
 ---
 
@@ -38,75 +46,51 @@
 
 ---
 
-## 🕵️‍♂️ How to Search for Targets on ZoomEye
-
-Since this scanner **does not use the ZoomEye API**, you must **manually search** on the ZoomEye website and download results as **JSON**.
-
-### **1️⃣ Go to ZoomEye.org and search for this dork:**
-
-```
-http.body_hash=="c49ca1932cca63320890e8db87c72ff7" && country=RU && (iconhash="89b932fcc47cf4ca3faadb0cfdef89cf")
-```
-
-- This query finds **Hikvision cameras in the United States** with specific fingerprints.  
-- Modify the `country=RU` part to target **other countries** if needed.
-
-### **2️⃣ Export results from ZoomEye as a JSON file**
-
-1. After running the search on ZoomEye, click **Export Results**.  
-2. Save the exported file (e.g., `results.json`).  
-
-### **3️⃣ Use ZoomCCTVScanner to analyze the JSON file**
-
-Run the scanner to check which cameras are vulnerable:  
-```bash
-python zoomCCTVScanner.py --file results.json --threads 20 --output vulnerable_cameras.txt
-```
-
----
-
 ## ⚙️ Installation & Requirements
 
 1. **Clone the repository**:  
    ```bash
    git clone https://github.com/InfoSec-DB/Hikvision-AfterDark.git
-   cd Hikvision-Afterdark/zoomCCTVScanner
+   cd Hikvision-Afterdark/Hikvision-ShodanScanner
    ```
-2. **Ensure you have downloaded a ZoomEye JSON file** with the correct format.  
+
+2. **Obtain a Shodan API Key** from [Shodan.io](https://www.shodan.io/)  
 3. **Optional**: If using **Tor**, ensure it is running on **port 9050**.
 
 ---
 
 ## 🚨 Usage
 
-Run the scanner with a **JSON list of IPs and ports**:  
+Run the scanner with your **Shodan API key**:  
 ```bash
-python zoomCCTVScanner.py --file results.json --threads 20 --output results.txt
+python shodan_scanner.py --api YOUR_SHODAN_API_KEY --country RU --output results.txt --verbose
 ```
 
 ### Available Options:
 | Argument | Description |
 |----------|-------------|
-| `--file, -f` | Path to JSON file containing IP/Port data |
+| `--api` | Your Shodan API key (required) |
+| `--country` | Target country (default: RU) |
 | `--output, -o` | Save scan results to a file (default: `hikvision_scan_results.txt`) |
-| `--threads, -t` | Number of threads for faster scanning (default: `20`) |
+| `--page, -p` | Number of Shodan result pages to process (default: `1`) |
+| `--verbose` | Enable verbose logging for debugging |
 
-### JSON File Format (`results.json` Example)
-```json
-{"ip": "192.168.1.1", "port": "80"}
-{"ip": "203.0.113.10", "port": "443,8080"}
-{"ip": "45.33.32.156", "port": ["80", "554"]}
+### Example Query
+
+```bash
+python shodan_scanner.py --api YOUR_SHODAN_API_KEY --country US --page 2 --output vulnerable_cameras.txt
 ```
+
+💡 **Tip**: Increase `--page` to scan more results, but be mindful of **Shodan API limits**.
 
 ---
 
 ## 📌 How It Works
 
-1. **Reads a JSON file** containing IP addresses and ports from **ZoomEye results**.  
-2. **Extracts unique IP/Port pairs** and filters Hikvision devices.  
-3. **Sends crafted requests** to test if a device is vulnerable.  
-4. **Logs findings** and outputs them in a structured format.  
-5. **Color-coded console output** for easier interpretation of results.  
+1. **Queries Shodan** for exposed Hikvision cameras in a given **country**.  
+2. **Extracts unique IP/Port pairs** from the search results.  
+3. **Attempts to access the camera snapshot endpoint** for vulnerability testing.  
+4. **Logs results** and outputs the list of vulnerable devices.  
 
 ✅ **Vulnerable Devices** → Displayed in **green**.  
 ⚠️ **Secure or Unknown Response** → Displayed in **yellow**.  
@@ -134,7 +118,7 @@ Feel free to adapt or redistribute for ethical purposes.
 ### 🏴‍☠️ Acknowledgments
 
 - **[#AfterDark]** – Original Hikvision scanning concept.  
-- **ZoomEye** – OSINT search engine used for reconnaissance.  
+- **Shodan.io** – OSINT search engine powering the queries.  
 - **Tor Project** – Anonymity support for safe scanning.  
 
 ---
